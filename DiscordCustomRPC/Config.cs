@@ -15,6 +15,7 @@ namespace DiscordCustomRPC
                 obj["ClientID"] = "Client ID";
                 obj["Details"] = "Details";
                 obj["State"] = "State";
+                obj["AutoStart"] = false;
                 obj["LIK"] = "";
                 obj["LIT"] = "";
                 obj["SIK"] = "";

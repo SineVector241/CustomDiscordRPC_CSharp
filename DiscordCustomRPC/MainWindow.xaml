@@ -30,7 +30,7 @@
             <TextBox x:Name="Details" TextWrapping="Wrap" VerticalAlignment="Top" Height="27" TextAlignment="Center" BorderThickness="1,1,1,1" Margin="20,42,20,0" Foreground="White" Background="#FF3C3C3C" BorderBrush="{x:Null}" FontSize="16" Text="Details"/>
             <TextBox x:Name="State" TextWrapping="Wrap" VerticalAlignment="Top" Height="27" TextAlignment="Center" BorderThickness="1,1,1,1" Margin="20,74,20,0" Foreground="White" Background="#FF3C3C3C" BorderBrush="{x:Null}" FontSize="16" Text="State"/>
         </Grid>
-        <Grid DockPanel.Dock="Bottom">
+        <Grid DockPanel.Dock="Bottom" Height="100">
             <Button x:Name="InitializeRPC" Content="Start Rich Presence" Height="73" RenderTransformOrigin="0.5,0.5" Width="160" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#FF6FFF63" BorderBrush="#FF4AD3F7" Cursor="Arrow" BorderThickness="2,2,2,2" Click="InitializeRPC_Click" Visibility="Visible" Margin="0,0,170,5">
                 <Button.RenderTransform>
                     <TransformGroup>
@@ -42,6 +42,7 @@
                 </Button.RenderTransform>
             </Button>
             <Button x:Name="SaveRPC" Content="Save RPC Content" HorizontalAlignment="Center" Height="73" VerticalAlignment="Top" Width="160" Background="#FF35A6CC" BorderThickness="2,2,2,2" BorderBrush="#FF4AD3F7" Margin="170,0,0,0" Click="SaveRPCSettings"/>
+            <CheckBox x:Name="Startup" Content="AutoStart RPC" HorizontalAlignment="Center" Margin="0,78,0,0" VerticalAlignment="Top" Foreground="White" Background="#FF989595"/>
         </Grid>
     </DockPanel>
 </Window>

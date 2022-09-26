@@ -41,6 +41,12 @@ namespace DiscordCustomRPC
                 Button2Check.IsChecked = (bool)obj["BTN2"]["Enabled"];
                 Button2Text.Text = obj["BTN2"]["Text"].ToString();
                 Button2Link.Text = obj["BTN2"]["URL"].ToString();
+                Startup.IsChecked = Convert.ToBoolean(obj["AutoStart"]);
+
+                if(Startup.IsChecked == true)
+                {
+                    StartRPC();
+                }
             }
             catch (Exception ex)
             {
@@ -49,13 +55,48 @@ namespace DiscordCustomRPC
         }
         private void InitializeRPC_Click(object sender, RoutedEventArgs e)
         {
+            StartRPC();
+        }
+
+        private void SaveRPCSettings(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                JObject obj = new JObject();
+                obj["ClientID"] = ClientID.Text;
+                obj["Details"] = Details.Text;
+                obj["State"] = State.Text;
+                obj["LIK"] = LargeImageKey.Text;
+                obj["LIT"] = LargeImageText.Text;
+                obj["SIK"] = SmallImageKey.Text;
+                obj["SIT"] = SmallImageText.Text;
+                obj["BTN1"] = new JObject();
+                obj["BTN1"]["Enabled"] = Button1Check.IsChecked;
+                obj["BTN1"]["Text"] = Button1Text.Text;
+                obj["BTN1"]["URL"] = Button1Link.Text;
+                obj["BTN2"] = new JObject();
+                obj["BTN2"]["Enabled"] = Button2Check.IsChecked;
+                obj["BTN2"]["Text"] = Button2Text.Text;
+                obj["BTN2"]["URL"] = Button2Link.Text;
+                obj["AutoStart"] = Startup.IsChecked;
+                config.SaveSettings(obj);
+                MessageBox.Show("Saved Your Settings", "Saved", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void StartRPC()
+        {
             try
             {
                 if (InitializeRPC.Content.ToString() == "Start Rich Presence")
                 {
                     if (string.IsNullOrWhiteSpace(ClientID.Text.ToString()))
                     {
-                        MessageBox.Show( "Please fill in the custom ID", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("Please fill in the custom ID", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
                     rpc = new DiscordRPC(ClientID.Text.ToString());
@@ -139,38 +180,9 @@ namespace DiscordCustomRPC
                     rpc.UpdateButtons(Buttons);
                     rpc.UpdateDetails(Details.Text.ToString());
                     rpc.UpdateState(State.Text.ToString());
-                    rpc.UpdateLargeAsset(LargeImageKey.Text.ToString(),LargeImageText.Text.ToString());
+                    rpc.UpdateLargeAsset(LargeImageKey.Text.ToString(), LargeImageText.Text.ToString());
                     rpc.UpdateSmallAsset(SmallImageKey.Text.ToString(), SmallImageText.Text.ToString());
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message,"Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        private void SaveRPCSettings(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                JObject obj = new JObject();
-                obj["ClientID"] = ClientID.Text;
-                obj["Details"] = Details.Text;
-                obj["State"] = State.Text;
-                obj["LIK"] = LargeImageKey.Text;
-                obj["LIT"] = LargeImageText.Text;
-                obj["SIK"] = SmallImageKey.Text;
-                obj["SIT"] = SmallImageText.Text;
-                obj["BTN1"] = new JObject();
-                obj["BTN1"]["Enabled"] = Button1Check.IsChecked;
-                obj["BTN1"]["Text"] = Button1Text.Text;
-                obj["BTN1"]["URL"] = Button1Link.Text;
-                obj["BTN2"] = new JObject();
-                obj["BTN2"]["Enabled"] = Button2Check.IsChecked;
-                obj["BTN2"]["Text"] = Button2Text.Text;
-                obj["BTN2"]["URL"] = Button2Link.Text;
-                config.SaveSettings(obj);
-                MessageBox.Show("Saved Your Settings", "Saved", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
             {
